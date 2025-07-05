@@ -1,0 +1,24 @@
+autoinstall:
+  version: 1
+  identity:
+    hostname: maicon-desktop
+    username: maicon
+    # root password
+    password: "08b5b6491249d55a305827167308e12bd190200aa0f78b6d59b293398fb1338d1db1fd5e8059cdfd1d2849fe528532066505867250fd29560793d279edc694a1"
+
+  locale:
+    - pt_BR.UTF-8
+  keyboard:
+    layout: us
+    variant: qwerty
+
+  packages:
+    - curl
+    - zsh
+    - git
+    - git-flow
+    - docker.io
+    - flameshot
+    - gnome-tweaks
+    - chromium
+    - fonts-firacode
