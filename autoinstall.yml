@@ -25,8 +25,6 @@ autoinstall:
     - gimp
 
   snaps:
-    - name: spotify
-      classic: true
     - name: discord
       classic: true
 
@@ -43,10 +41,23 @@ autoinstall:
     - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/zsh.sh"
     - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/docker.sh"
     - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/docker-compose-v2.sh"
-    # adicione aqui outros scripts, ex: chrome.sh, brave.sh...
+    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/eza-icons-terminal.sh"
+    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/powerlevel10k.sh"
+    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/warp-terminal.sh"
+    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/spotify.sh"
+    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/1password.sh"
 
     # Permite execução dos scripts
     - curtin in-target --target=/target chmod +x /usr/local/bin/*.sh
 
-    # Executa o script mestre que chama os demais
-    - curtin in-target --target=/target bash /usr/local/bin/install_workerboss.sh
+    # Executa o scripts
+    - curtin in-target --target=/target bash /usr/local/bin/nvm.sh
+    - curtin in-target --target=/target bash /usr/local/bin/vscode.sh
+    - curtin in-target --target=/target bash /usr/local/bin/zsh.sh
+    - curtin in-target --target=/target bash /usr/local/bin/docker.sh
+    - curtin in-target --target=/target bash /usr/local/bin/docker-compose-v2.sh
+    - curtin in-target --target=/target bash /usr/local/bin/eza-icons-terminal.sh
+    - curtin in-target --target=/target bash /usr/local/bin/powerlevel10k.sh
+    - curtin in-target --target=/target bash /usr/local/bin/warp-terminal.sh
+    - curtin in-target --target=/target bash /usr/local/bin/spotify.sh
+    - curtin in-target --target=/target bash /usr/local/bin/1password.sh
