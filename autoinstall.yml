@@ -27,6 +27,8 @@ autoinstall:
   snaps:
     - name: discord
       classic: true
+    - name: redis-insight
+      classic: true
 
   late-commands:
     # Atualiza o cache do apt
@@ -61,3 +63,8 @@ autoinstall:
     - curtin in-target --target=/target bash /usr/local/bin/warp-terminal.sh
     - curtin in-target --target=/target bash /usr/local/bin/spotify.sh
     - curtin in-target --target=/target bash /usr/local/bin/1password.sh
+
+    # Cria o diretório Projects no home do usuário maicon
+    - curtin in-target --target=/target --run-as maicon bash -c "mkdir -p /home/maicon/Projects && chown maicon:maicon /home/maicon/Projects"
+    - curtin in-target --target=/target --run-as maicon bash -c "mkdir -p /home/maicon/.multiplier && chown maicon:maicon /home/maicon/.multiplier"
+    - curtin in-target --target=/target --run-as maicon bash -c "mkdir -p /home/maicon/.volleytrack && chown maicon:maicon /home/maicon/.volleytrack"
