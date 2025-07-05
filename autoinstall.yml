@@ -45,3 +45,6 @@ runcmd:
   - bash /usr/local/bin/warp-terminal.sh
   - bash /usr/local/bin/spotify.sh
   - bash /usr/local/bin/1password.sh
+
+  # Cria os diretórios
+  - sudo -u maicon mkdir -p /home/maicon/Projects /home/maicon/.multiplier /home/maicon/.volleytrack
