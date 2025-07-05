@@ -14,7 +14,6 @@ autoinstall:
 
   packages:
     - curl
-    - zsh
     - git
     - git-flow
     - docker.io
@@ -22,3 +21,32 @@ autoinstall:
     - gnome-tweaks
     - chromium
     - fonts-firacode
+    - inkscape
+    - gimp
+
+  snaps:
+    - name: spotify
+      classic: true
+    - name: discord
+      classic: true
+
+  late-commands:
+    # Atualiza o cache do apt
+    - curtin in-target --target=/target apt-get update
+
+    # Instala dependências básicas
+    - curtin in-target --target=/target apt-get install -y wget ca-certificates
+
+    # Baixa todos os scripts para /usr/local/bin/
+    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/nvm.sh"
+    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/vscode.sh"
+    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/zsh.sh"
+    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/docker.sh"
+    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/docker-compose-v2.sh"
+    # adicione aqui outros scripts, ex: chrome.sh, brave.sh...
+
+    # Permite execução dos scripts
+    - curtin in-target --target=/target chmod +x /usr/local/bin/*.sh
+
+    # Executa o script mestre que chama os demais
+    - curtin in-target --target=/target bash /usr/local/bin/install_workerboss.sh
