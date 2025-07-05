@@ -1,70 +1,47 @@
-autoinstall:
-  version: 1
-  identity:
-    hostname: maicon-desktop
-    username: maicon
-    # root password
-    password: "08b5b6491249d55a305827167308e12bd190200aa0f78b6d59b293398fb1338d1db1fd5e8059cdfd1d2849fe528532066505867250fd29560793d279edc694a1"
+#cloud-config
 
-  locale:
-    - pt_BR.UTF-8
-  keyboard:
-    layout: us
-    variant: qwerty
+packages:
+  - curl
+  - git
+  - git-flow
+  - docker.io
+  - flameshot
+  - gnome-tweaks
+  - chromium
+  - fonts-firacode
+  - inkscape
+  - gimp
 
-  packages:
-    - curl
-    - git
-    - git-flow
-    - docker.io
-    - flameshot
-    - gnome-tweaks
-    - chromium
-    - fonts-firacode
-    - inkscape
-    - gimp
+snaps:
+  - name: discord
+    classic: true
+  - name: redis-insight
+    classic: true
 
-  snaps:
-    - name: discord
-      classic: true
-    - name: redis-insight
-      classic: true
+runcmd:
+  # Baixa os scripts
+  - wget -qO /usr/local/bin/nvm.sh https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/nvm.sh
+  - wget -qO /usr/local/bin/vscode.sh https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/vscode.sh
+  - wget -qO /usr/local/bin/zsh.sh https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/zsh.sh
+  - wget -qO /usr/local/bin/docker.sh https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/docker.sh
+  - wget -qO /usr/local/bin/docker-compose-v2.sh https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/docker-compose-v2.sh
+  - wget -qO /usr/local/bin/eza-icons-terminal.sh https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/eza-icons-terminal.sh
+  - wget -qO /usr/local/bin/powerlevel10k.sh https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/powerlevel10k.sh
+  - wget -qO /usr/local/bin/warp-terminal.sh https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/warp-terminal.sh
+  - wget -qO /usr/local/bin/spotify.sh https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/spotify.sh
+  - wget -qO /usr/local/bin/1password.sh https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/1password.sh
 
-  late-commands:
-    # Atualiza o cache do apt
-    - curtin in-target --target=/target apt-get update
+  # Permite execução dos scripts
+  - chmod +x /usr/local/bin/*.sh
 
-    # Instala dependências básicas
-    - curtin in-target --target=/target apt-get install -y wget ca-certificates
-
-    # Baixa todos os scripts para /usr/local/bin/
-    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/nvm.sh"
-    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/vscode.sh"
-    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/zsh.sh"
-    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/docker.sh"
-    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/docker-compose-v2.sh"
-    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/eza-icons-terminal.sh"
-    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/powerlevel10k.sh"
-    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/warp-terminal.sh"
-    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/spotify.sh"
-    - curtin in-target --target=/target bash -c "cd /usr/local/bin && wget -q https://raw.githubusercontent.com/CeruttiMaicon/my-ubuntu-dev/main/scripts/1password.sh"
-
-    # Permite execução dos scripts
-    - curtin in-target --target=/target chmod +x /usr/local/bin/*.sh
-
-    # Executa o scripts
-    - curtin in-target --target=/target bash /usr/local/bin/nvm.sh
-    - curtin in-target --target=/target bash /usr/local/bin/vscode.sh
-    - curtin in-target --target=/target bash /usr/local/bin/zsh.sh
-    - curtin in-target --target=/target bash /usr/local/bin/docker.sh
-    - curtin in-target --target=/target bash /usr/local/bin/docker-compose-v2.sh
-    - curtin in-target --target=/target bash /usr/local/bin/eza-icons-terminal.sh
-    - curtin in-target --target=/target bash /usr/local/bin/powerlevel10k.sh
-    - curtin in-target --target=/target bash /usr/local/bin/warp-terminal.sh
-    - curtin in-target --target=/target bash /usr/local/bin/spotify.sh
-    - curtin in-target --target=/target bash /usr/local/bin/1password.sh
-
-    # Cria o diretório Projects no home do usuário maicon
-    - curtin in-target --target=/target --run-as maicon bash -c "mkdir -p /home/maicon/Projects && chown maicon:maicon /home/maicon/Projects"
-    - curtin in-target --target=/target --run-as maicon bash -c "mkdir -p /home/maicon/.multiplier && chown maicon:maicon /home/maicon/.multiplier"
-    - curtin in-target --target=/target --run-as maicon bash -c "mkdir -p /home/maicon/.volleytrack && chown maicon:maicon /home/maicon/.volleytrack"
+  # Executa os scripts
+  - bash /usr/local/bin/nvm.sh
+  - bash /usr/local/bin/vscode.sh
+  - bash /usr/local/bin/zsh.sh
+  - bash /usr/local/bin/docker.sh
+  - bash /usr/local/bin/docker-compose-v2.sh
+  - bash /usr/local/bin/eza-icons-terminal.sh
+  - bash /usr/local/bin/powerlevel10k.sh
+  - bash /usr/local/bin/warp-terminal.sh
+  - bash /usr/local/bin/spotify.sh
+  - bash /usr/local/bin/1password.sh
